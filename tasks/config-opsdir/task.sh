@@ -112,7 +112,7 @@ NETWORK_CONFIGURATION=$(cat <<-EOF
     },
     {
       "name": "$DYNAMIC_SERVICES_NETWORK_NAME",
-      "service_network": true,
+      "service_network": false,
       "subnets": [
         {
           "iaas_identifier": "$DYNAMIC_SERVICES_VCENTER_NETWORK",
@@ -165,18 +165,19 @@ NETWORK_ASSIGNMENT=$(cat <<-EOF
 EOF
 )
 
-echo -e "-i $IAAS_CONFIGURATION \n"
-echo -e "-d $DIRECTOR_CONFIG \n"
-echo -e "-s $SECURITY_CONFIG \n"
-echo -e "-a $AZ_CONFIGURATION \n"
-echo -e "-n $NETWORK_CONFIGURATION \n"
-echo -e "-na $NETWORK_ASSIGNMENT \n"
-$CMD configure-bosh -h
+# echo -e "-i $IAAS_CONFIGURATION \n"
+# echo -e "-d $DIRECTOR_CONFIG \n"
+# echo -e "-s $SECURITY_CONFIG \n"
+# echo -e "-a $AZ_CONFIGURATION \n"
+# echo -e "-n $NETWORK_CONFIGURATION \n"
+# echo -e "-na $NETWORK_ASSIGNMENT \n"
+# $CMD configure-bosh -h
+
+#            -s "$SECURITY_CONFIG" \
 
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
             -i "$IAAS_CONFIGURATION" \
             -d "$DIRECTOR_CONFIG" \
-            -s "$SECURITY_CONFIG" \
             -a "$AZ_CONFIGURATION" \
             -n "$NETWORK_CONFIGURATION" \
             -na "$NETWORK_ASSIGNMENT"
