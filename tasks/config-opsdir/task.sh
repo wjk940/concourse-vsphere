@@ -1,6 +1,8 @@
 #!/bin/bash
 chmod +x om-cli/om-linux
 
+# source concourse-vsphere/tasks/config-opsdir/taskenv
+
 CMD=./om-cli/om-linux
 
 function fn_get_azs {
@@ -145,7 +147,7 @@ EOF
 
 SECURITY_CONFIG=$(cat <<-EOF
 {
-    "trusted_certificates": $TRUSTED_CERTIFICATES,
+    "trusted_certificates": "$TRUSTED_CERTIFICATES",
     "generate_vm_passwords": $GENERATE_VM_PASSWORDS
 }
 EOF
@@ -166,21 +168,32 @@ EOF
 )
 
 # echo -e "-i $IAAS_CONFIGURATION \n"
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+# 	-i "$IAAS_CONFIGURATION"
 # echo -e "-d $DIRECTOR_CONFIG \n"
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+# 	-d "$DIRECTOR_CONFIG"
 # echo -e "-s $SECURITY_CONFIG \n"
-# echo -e "-a $AZ_CONFIGURATION \n"
-# echo -e "-n $NETWORK_CONFIGURATION \n"
-# echo -e "-na $NETWORK_ASSIGNMENT \n"
-# $CMD configure-bosh -h
-env
-
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+# 	-s "$SECURITY_CONFIG"
+echo -e "-a $AZ_CONFIGURATION \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-	-i "$IAAS_CONFIGURATION" \
-	-d "$DIRECTOR_CONFIG" \
-	-s "$SECURITY_CONFIG" \
-	-a "$AZ_CONFIGURATION" \
-	-n "$NETWORK_CONFIGURATION" \
+	-a "$AZ_CONFIGURATION"
+echo -e "-n $NETWORK_CONFIGURATION \n"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+	-n "$NETWORK_CONFIGURATION"
+echo -e "-na $NETWORK_ASSIGNMENT \n"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-na "$NETWORK_ASSIGNMENT"
+
+# env
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+# 	-i "$IAAS_CONFIGURATION" \
+# 	-d "$DIRECTOR_CONFIG" \
+# 	-s "$SECURITY_CONFIG" \
+# 	-a "$AZ_CONFIGURATION" \
+# 	-n "$NETWORK_CONFIGURATION" \
+# 	-na "$NETWORK_ASSIGNMENT"
 
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
 #             curl -p "/api/v0/staged/director/availability_zones" \
