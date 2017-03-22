@@ -98,7 +98,7 @@ NETWORK_CONFIGURATION=$(cat <<-EOF
     },
     {
       "name": "$SERVICES_NETWORK_NAME",
-      "service_network": true,
+      "service_network": false,
       "subnets": [
         {
           "iaas_identifier": "$SERVICES_VCENTER_NETWORK",
@@ -183,11 +183,11 @@ $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
             -x PUT -d "$AZ_CONFIGURATION"
 
 echo -e "-n $NETWORK_CONFIGURATION \n"
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-	-n "$NETWORK_CONFIGURATION"
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-#             curl -p "/api/v0/staged/director/networks" \
-#             -x PUT -d "$NETWORK_CONFIGURATION"
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+# 	-n "$NETWORK_CONFIGURATION"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+            curl -p "/api/v0/staged/director/networks" \
+            -x PUT -d "$NETWORK_CONFIGURATION"
 
 echo -e "-na $NETWORK_ASSIGNMENT \n"
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
