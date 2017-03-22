@@ -1,5 +1,4 @@
-#!/bin/bash -e
-
+#!/bin/bash
 chmod +x om-cli/om-linux
 
 CMD=./om-cli/om-linux
@@ -16,8 +15,8 @@ IAAS_CONFIGURATION=$(cat <<-EOF
   "vcenter_password": "$VCENTER_PWD",
   "datacenter": "$VCENTER_DATA_CENTER",
   "disk_type": "$VCENTER_DISK_TYPE",
-  "ephemeral_datastores_string": "$STORAGE_NAMES",
-  "persistent_datastores_string": "$STORAGE_NAMES",
+  "ephemeral_datastores_string": "$EPHEMERAL_STORAGE_NAMES",
+  "persistent_datastores_string": "$PERSISTENT_STORAGE_NAMES",
   "bosh_vm_folder": "pcf_vms",
   "bosh_template_folder": "pcf_templates",
   "bosh_disk_path": "pcf_disk",
@@ -43,6 +42,11 @@ AZ_CONFIGURATION=$(cat <<-EOF
       "name": "$AZ_3",
       "cluster": "$AZ_3_CUSTER_NAME",
       "resource_pool": "$AZ_3_RP_NAME"
+    },
+    {
+      "name": "$AZ_4",
+      "cluster": "$AZ_4_CUSTER_NAME",
+      "resource_pool": "$AZ_4_RP_NAME"
     }
   ]
 }
@@ -56,7 +60,7 @@ DYNAMIC_SERVICES_AZS=$(fn_get_azs $DYNAMIC_SERVICES_NW_AZS)
 
 NETWORK_CONFIGURATION=$(cat <<-EOF
 {
-  "icmp_checks_enabled": true,
+  "icmp_checks_enabled": false,
   "networks": [
     {
       "name": "$INFRA_NETWORK_NAME",
@@ -139,6 +143,14 @@ DIRECTOR_CONFIG=$(cat <<-EOF
 EOF
 )
 
+SECURITY_CONFIG=$(cat <<-EOF
+{
+    "trusted_certificates": $TRUSTED_CERTIFICATES,
+    "generate_vm_passwords": $GENERATE_VM_PASSWORDS
+}
+EOF
+)
+
 NETWORK_ASSIGNMENT=$(cat <<-EOF
 {
   "network_and_az": {
@@ -153,18 +165,30 @@ NETWORK_ASSIGNMENT=$(cat <<-EOF
 EOF
 )
 
+echo -e "-i $IAAS_CONFIGURATION \n"
+echo -e "-d $DIRECTOR_CONFIG \n"
+echo -e "-s $SECURITY_CONFIG \n"
+echo -e "-a $AZ_CONFIGURATION \n"
+echo -e "-n $NETWORK_CONFIGURATION \n"
+echo -e "-na $NETWORK_ASSIGNMENT \n"
+$CMD configure-bosh -h
+
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
             -i "$IAAS_CONFIGURATION" \
-            -d "$DIRECTOR_CONFIG"
+            -d "$DIRECTOR_CONFIG" \
+            -s "$SECURITY_CONFIG" \
+            -a "$AZ_CONFIGURATION" \
+            -n "$NETWORK_CONFIGURATION" \
+            -na "$NETWORK_ASSIGNMENT"
 
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-            curl -p "/api/v0/staged/director/availability_zones" \
-            -x PUT -d "$AZ_CONFIGURATION"
-
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-            curl -p "/api/v0/staged/director/networks" \
-            -x PUT -d "$NETWORK_CONFIGURATION"
-
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-            curl -p "/api/v0/staged/director/network_and_az" \
-            -x PUT -d "$NETWORK_ASSIGNMENT"
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+#             curl -p "/api/v0/staged/director/availability_zones" \
+#             -x PUT -d "$AZ_CONFIGURATION"
+# 
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+#             curl -p "/api/v0/staged/director/networks" \
+#             -x PUT -d "$NETWORK_CONFIGURATION"
+# 
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+#             curl -p "/api/v0/staged/director/network_and_az" \
+#             -x PUT -d "$NETWORK_ASSIGNMENT"
