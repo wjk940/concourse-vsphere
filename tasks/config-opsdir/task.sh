@@ -167,15 +167,15 @@ NETWORK_ASSIGNMENT=$(cat <<-EOF
 EOF
 )
 
-# echo -e "-i $IAAS_CONFIGURATION \n"
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-# 	-i "$IAAS_CONFIGURATION"
-# echo -e "-d $DIRECTOR_CONFIG \n"
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-# 	-d "$DIRECTOR_CONFIG"
-# echo -e "-s $SECURITY_CONFIG \n"
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-# 	-s "$SECURITY_CONFIG"
+echo -e "-i $IAAS_CONFIGURATION \n"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+	-i "$IAAS_CONFIGURATION"
+echo -e "-d $DIRECTOR_CONFIG \n"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+	-d "$DIRECTOR_CONFIG"
+echo -e "-s $SECURITY_CONFIG \n"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+	-s "$SECURITY_CONFIG"
 echo -e "-a $AZ_CONFIGURATION \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-a "$AZ_CONFIGURATION"
