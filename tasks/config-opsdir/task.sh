@@ -173,9 +173,6 @@ $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh 
 echo -e "-d $DIRECTOR_CONFIG \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-d "$DIRECTOR_CONFIG"
-echo -e "-s $SECURITY_CONFIG \n"
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-	-s "$SECURITY_CONFIG"
 echo -e "-a $AZ_CONFIGURATION \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-a "$AZ_CONFIGURATION"
@@ -185,6 +182,9 @@ $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh 
 echo -e "-na $NETWORK_ASSIGNMENT \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-na "$NETWORK_ASSIGNMENT"
+echo -e "-s $SECURITY_CONFIG \n"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+	-s "$SECURITY_CONFIG"
 
 # env
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
