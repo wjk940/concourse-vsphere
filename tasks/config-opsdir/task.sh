@@ -172,15 +172,15 @@ EOF
 # echo -e "-n $NETWORK_CONFIGURATION \n"
 # echo -e "-na $NETWORK_ASSIGNMENT \n"
 # $CMD configure-bosh -h
-
-#            -s "$SECURITY_CONFIG" \
+env
 
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-            -i "$IAAS_CONFIGURATION" \
-            -d "$DIRECTOR_CONFIG" \
-            -a "$AZ_CONFIGURATION" \
-            -n "$NETWORK_CONFIGURATION" \
-            -na "$NETWORK_ASSIGNMENT"
+	-i "$IAAS_CONFIGURATION" \
+	-d "$DIRECTOR_CONFIG" \
+	-s "$SECURITY_CONFIG" \
+	-a "$AZ_CONFIGURATION" \
+	-n "$NETWORK_CONFIGURATION" \
+	-na "$NETWORK_ASSIGNMENT"
 
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
 #             curl -p "/api/v0/staged/director/availability_zones" \
