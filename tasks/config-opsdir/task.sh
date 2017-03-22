@@ -147,7 +147,7 @@ EOF
 
 SECURITY_CONFIG=$(cat <<-EOF
 {
-    "trusted_certificates": "$TRUSTED_CERTIFICATES",
+    "trusted_certificates": $TRUSTED_CERTIFICATES,
     "generate_vm_passwords": $GENERATE_VM_PASSWORDS
 }
 EOF
@@ -170,21 +170,32 @@ EOF
 echo -e "-i $IAAS_CONFIGURATION \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-i "$IAAS_CONFIGURATION"
+
 echo -e "-d $DIRECTOR_CONFIG \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-d "$DIRECTOR_CONFIG"
+
 echo -e "-a $AZ_CONFIGURATION \n"
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-a "$AZ_CONFIGURATION"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
             curl -p "/api/v0/staged/director/availability_zones" \
             -x PUT -d "$AZ_CONFIGURATION"
+
 echo -e "-n $NETWORK_CONFIGURATION \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-n "$NETWORK_CONFIGURATION"
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+#             curl -p "/api/v0/staged/director/networks" \
+#             -x PUT -d "$NETWORK_CONFIGURATION"
+
 echo -e "-na $NETWORK_ASSIGNMENT \n"
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-	-na "$NETWORK_ASSIGNMENT"
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+# 	-na "$NETWORK_ASSIGNMENT"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+            curl -p "/api/v0/staged/director/network_and_az" \
+            -x PUT -d "$NETWORK_ASSIGNMENT"
+
 echo -e "-s $SECURITY_CONFIG \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-s "$SECURITY_CONFIG"
@@ -197,15 +208,3 @@ $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh 
 # 	-a "$AZ_CONFIGURATION" \
 # 	-n "$NETWORK_CONFIGURATION" \
 # 	-na "$NETWORK_ASSIGNMENT"
-
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-#             curl -p "/api/v0/staged/director/availability_zones" \
-#             -x PUT -d "$AZ_CONFIGURATION"
-# 
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-#             curl -p "/api/v0/staged/director/networks" \
-#             -x PUT -d "$NETWORK_CONFIGURATION"
-# 
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-#             curl -p "/api/v0/staged/director/network_and_az" \
-#             -x PUT -d "$NETWORK_ASSIGNMENT"
