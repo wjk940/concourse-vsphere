@@ -66,7 +66,7 @@ NETWORK_CONFIGURATION=$(cat <<-EOF
   "networks": [
     {
       "name": "$INFRA_NETWORK_NAME",
-      "service_network": false,
+      "service_network": $INFRA_SRVC_NW,
       "subnets": [
         {
           "iaas_identifier": "$INFRA_VCENTER_NETWORK",
@@ -82,7 +82,7 @@ NETWORK_CONFIGURATION=$(cat <<-EOF
     },
     {
       "name": "$DEPLOYMENT_NETWORK_NAME",
-      "service_network": false,
+      "service_network": $DEPLOYMENT_SRVC_NW,
       "subnets": [
         {
           "iaas_identifier": "$DEPLOYMENT_VCENTER_NETWORK",
@@ -98,7 +98,7 @@ NETWORK_CONFIGURATION=$(cat <<-EOF
     },
     {
       "name": "$SERVICES_NETWORK_NAME",
-      "service_network": false,
+      "service_network": $SERVICES_SRVC_NW,
       "subnets": [
         {
           "iaas_identifier": "$SERVICES_VCENTER_NETWORK",
@@ -114,7 +114,7 @@ NETWORK_CONFIGURATION=$(cat <<-EOF
     },
     {
       "name": "$DYNAMIC_SERVICES_NETWORK_NAME",
-      "service_network": false,
+      "service_network": $DYNAMIC_SERVICES_SRVC_NW,
       "subnets": [
         {
           "iaas_identifier": "$DYNAMIC_SERVICES_VCENTER_NETWORK",
@@ -167,34 +167,34 @@ NETWORK_ASSIGNMENT=$(cat <<-EOF
 EOF
 )
 
-echo -e "-i $IAAS_CONFIGURATION \n"
+# echo -e "-i $IAAS_CONFIGURATION \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-i "$IAAS_CONFIGURATION"
 
-echo -e "-d $DIRECTOR_CONFIG \n"
+# echo -e "-d $DIRECTOR_CONFIG \n"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-d "$DIRECTOR_CONFIG"
 
-echo -e "-a $AZ_CONFIGURATION \n"
+# echo -e "-a $AZ_CONFIGURATION \n"
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-a "$AZ_CONFIGURATION"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-            curl -p "/api/v0/staged/director/availability_zones" \
-            -x PUT -d "$AZ_CONFIGURATION"
+	curl -p "/api/v0/staged/director/availability_zones" \
+	-x PUT -d "$AZ_CONFIGURATION"
 
-echo -e "-n $NETWORK_CONFIGURATION \n"
+# echo -e "-n $NETWORK_CONFIGURATION \n"
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-n "$NETWORK_CONFIGURATION"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-            curl -p "/api/v0/staged/director/networks" \
-            -x PUT -d "$NETWORK_CONFIGURATION"
+	curl -p "/api/v0/staged/director/networks" \
+	-x PUT -d "$NETWORK_CONFIGURATION"
 
-echo -e "-na $NETWORK_ASSIGNMENT \n"
+# echo -e "-na $NETWORK_ASSIGNMENT \n"
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-na "$NETWORK_ASSIGNMENT"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-            curl -p "/api/v0/staged/director/network_and_az" \
-            -x PUT -d "$NETWORK_ASSIGNMENT"
+	curl -p "/api/v0/staged/director/network_and_az" \
+	-x PUT -d "$NETWORK_ASSIGNMENT"
 
 # echo -e "-s $SECURITY_CONFIG \n"
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \

@@ -129,6 +129,7 @@ jobs:
       EPHEMERAL_STORAGE_NAMES: {{ephemeral_storage_names}}
       PERSISTENT_STORAGE_NAMES: {{persistent_storage_names}}
       INFRA_NETWORK_NAME: {{infra_network_name}}
+      INFRA_SRVC_NW: {{infra_srvc_nw}}
       INFRA_VCENTER_NETWORK: {{infra_vsphere_network}}
       INFRA_NW_CIDR: {{infra_nw_cidr}}
       INFRA_EXCLUDED_RANGE: {{infra_excluded_range}}
@@ -136,6 +137,7 @@ jobs:
       INFRA_NW_GATEWAY: {{infra_nw_gateway}}
       INFRA_NW_AZS: {{infra_nw_azs}}
       DEPLOYMENT_NETWORK_NAME: {{deployment_network_name}}
+      DEPLOYMENT_SRVC_NW: {{deployment_srvc_nw}}
       DEPLOYMENT_VCENTER_NETWORK: {{deployment_vsphere_network}}
       DEPLOYMENT_NW_CIDR: {{deployment_nw_cidr}}
       DEPLOYMENT_EXCLUDED_RANGE: {{deployment_excluded_range}}
@@ -143,6 +145,7 @@ jobs:
       DEPLOYMENT_NW_GATEWAY: {{deployment_nw_gateway}}
       DEPLOYMENT_NW_AZS: {{deployment_nw_azs}}
       SERVICES_NETWORK_NAME: {{services_network_name}}
+      SERVICES_SRVC_NW: {{services_srvc_nw}}
       SERVICES_VCENTER_NETWORK: {{services_vsphere_network}}
       SERVICES_NW_CIDR: {{services_nw_cidr}}
       SERVICES_EXCLUDED_RANGE: {{services_excluded_range}}
@@ -150,6 +153,7 @@ jobs:
       SERVICES_NW_GATEWAY: {{services_nw_gateway}}
       SERVICES_NW_AZS: {{services_nw_azs}}
       DYNAMIC_SERVICES_NETWORK_NAME: {{dynamic_services_network_name}}
+      DYNAMIC_SERVICES_SRVC_NW: {{dynamic_services_srvc_nw}}
       DYNAMIC_SERVICES_VCENTER_NETWORK: {{dynamic_services_vsphere_network}}
       DYNAMIC_SERVICES_NW_CIDR: {{dynamic_services_nw_cidr}}
       DYNAMIC_SERVICES_EXCLUDED_RANGE: {{dynamic_services_excluded_range}}
