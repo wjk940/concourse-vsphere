@@ -259,7 +259,6 @@ jobs:
       SSL_CERT: {{ssl_cert}}
       OPS_MGR_GENERATE_SSL_ENDPOINT: {{om_generate_ssl_endpoint}}
       SSL_PRIVATE_KEY: {{ssl_private_key}}
-      DISABLE_HTTP_PROXY: {{disable_http_proxy}}
       TCP_ROUTING: {{tcp_routing}}
       TCP_ROUTING_PORTS: {{tcp_routing_ports}}
       ROUTE_SERVICES: {{route_services}}
