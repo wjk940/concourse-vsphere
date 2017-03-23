@@ -196,9 +196,9 @@ $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
 	curl -p "/api/v0/staged/director/network_and_az" \
 	-x PUT -d "$NETWORK_ASSIGNMENT"
 
-# echo -e "-s $SECURITY_CONFIG \n"
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-# 	-s "$SECURITY_CONFIG"
+echo -e "-s $SECURITY_CONFIG \n"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+	-s "$SECURITY_CONFIG"
 
 # env
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
