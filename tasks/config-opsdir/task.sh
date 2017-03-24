@@ -198,13 +198,11 @@ $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
 	curl -p "/api/v0/staged/director/network_and_az" \
 	-x PUT -d "$NETWORK_ASSIGNMENT"
 
-echo "$TRUSTED_CERTIFICATES"
-echo "-s $SECURITY_CONFIG"
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-s "$SECURITY_CONFIG"
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-	curl -p "/api/v0/staged/director/properties" \
-	-x PUT -d "$SECURITY_CONFIG"
+# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+# 	curl -p "/api/v0/staged/director/properties" \
+# 	-x PUT -d "$SECURITY_CONFIG"
 
 # env
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
