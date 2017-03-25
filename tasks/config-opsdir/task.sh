@@ -62,7 +62,7 @@ DYNAMIC_SERVICES_AZS=$(fn_get_azs $DYNAMIC_SERVICES_NW_AZS)
 
 NETWORK_CONFIGURATION=$(cat <<-EOF
 {
-  "icmp_checks_enabled": false,
+  "icmp_checks_enabled": $ICMP_CHECKS_ENABLED,
   "networks": [
     {
       "name": "$INFRA_NETWORK_NAME",
@@ -135,7 +135,7 @@ EOF
 
 DIRECTOR_CONFIG=$(cat <<-EOF
 {
-  "ntp_servers_string": "$NTP_SERVER_IPS",
+  "ntp_servers_string": "$NTP_SERVERS",
   "resurrector_enabled": $ENABLE_VM_RESURRECTOR,
   "max_threads": $MAX_THREADS,
   "database_type": "internal",
@@ -148,8 +148,8 @@ EOF
 SECURITY_CONFIG=$(cat <<-EOF
 {
   "security_configuration": {
-    "trusted_certificates": "$TRUSTED_CERTIFICATES",
-    "generate_vm_passwords": $GENERATE_VM_PASSWORDS
+    "generate_vm_passwords": $GENERATE_VM_PASSWORDS,
+    "trusted_certificates": "$TRUSTED_CERTIFICATES"
   }
 }
 EOF
@@ -169,40 +169,38 @@ NETWORK_ASSIGNMENT=$(cat <<-EOF
 EOF
 )
 
-# echo -e "-i $IAAS_CONFIGURATION \n"
+echo "Configuring IaaS and Director..."
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-	-i "$IAAS_CONFIGURATION"
-
-# echo -e "-d $DIRECTOR_CONFIG \n"
-$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
+	-i "$IAAS_CONFIGURATION" \
 	-d "$DIRECTOR_CONFIG"
 
-# echo -e "-a $AZ_CONFIGURATION \n"
+echo "Configuring availability zones..."
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-a "$AZ_CONFIGURATION"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
 	curl -p "/api/v0/staged/director/availability_zones" \
 	-x PUT -d "$AZ_CONFIGURATION"
 
-# echo -e "-n $NETWORK_CONFIGURATION \n"
+echo "Configuring networks..."
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-n "$NETWORK_CONFIGURATION"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
 	curl -p "/api/v0/staged/director/networks" \
 	-x PUT -d "$NETWORK_CONFIGURATION"
 
-# echo -e "-na $NETWORK_ASSIGNMENT \n"
+echo "Configuring network assignment..."
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-na "$NETWORK_ASSIGNMENT"
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
 	curl -p "/api/v0/staged/director/network_and_az" \
 	-x PUT -d "$NETWORK_ASSIGNMENT"
 
+echo "Configuring security..."
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 # 	-s "$SECURITY_CONFIG"
-# $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
-# 	curl -p "/api/v0/staged/director/properties" \
-# 	-x PUT -d "$SECURITY_CONFIG"
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD \
+	curl -p "/api/v0/staged/director/properties" \
+	-x PUT -d "$SECURITY_CONFIG"
 
 # env
 # $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
