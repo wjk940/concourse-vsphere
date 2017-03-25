@@ -171,7 +171,9 @@ EOF
 
 echo "Configuring IaaS and Director..."
 $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
-	-i "$IAAS_CONFIGURATION" \
+	-i "$IAAS_CONFIGURATION"
+
+$CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD configure-bosh \
 	-d "$DIRECTOR_CONFIG"
 
 echo "Configuring availability zones..."
