@@ -176,7 +176,7 @@ jobs:
       AZ_5: {{az_5_name}}
       AZ_5_CUSTER_NAME: {{az_5_cluster_name}}
       AZ_5_RP_NAME: {{az_5_rp_name}}
-      NTP_SERVER_IPS: {{ntp_servers}}
+      NTP_SERVERS: {{ntp_servers}}
       OPS_DIR_HOSTNAME: {{ops_dir_hostname}}
       ENABLE_VM_RESURRECTOR: {{enable_vm_resurrector}}
       MAX_THREADS: {{max_threads}}
