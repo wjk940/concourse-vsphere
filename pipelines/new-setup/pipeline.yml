@@ -44,12 +44,16 @@ resources:
   source:
     api_token: {{pivnet_token}}
     product_slug: ops-manager
+    product_version: {{om_version}}
+    sort_by: semver
 
 - name: pivnet-er-product
   type: pivnet
   source:
     api_token: {{pivnet_token}}
     product_slug: elastic-runtime
+    product_version: {{ert_version}}
+    sort_by: semver
 
 jobs:
 
@@ -62,7 +66,9 @@ jobs:
         globs:
         - "*linux_amd64*"
     - get: om-cli
-      globs: om-linux
+      params:
+        globs:
+        - om-linux
     - get: pivnet-opsman-product
       params:
         globs:
