@@ -167,6 +167,14 @@ jobs:
       DYNAMIC_SERVICES_NW_DNS: {{dynamic_services_nw_dns}}
       DYNAMIC_SERVICES_NW_GATEWAY: {{dynamic_services_nw_gateway}}
       DYNAMIC_SERVICES_NW_AZS: {{dynamic_services_nw_azs}}
+      ISOLATION_SEGMENT_NETWORK_NAME: {{isolation_segment_network_name}}
+      ISOLATION_SEGMENT_SRVC_NW: {{isolation_segment_srvc_nw}}
+      ISOLATION_SEGMENT_VSPHERE_NETWORK: {{isolation_segment_vsphere_network}}
+      ISOLATION_SEGMENT_NW_CIDR: {{isolation_segment_nw_cidr}}
+      ISOLATION_SEGMENT_EXCLUDED_RANGE: {{isolation_segment_excluded_range}}
+      ISOLATION_SEGMENT_NW_DNS: {{isolation_segment_nw_dns}}
+      ISOLATION_SEGMENT_NW_GATEWAY: {{isolation_segment_nw_gateway}}
+      ISOLATION_SEGMENT_NW_AZS: {{isolation_segment_nw_azs}}
       AZ_1: {{az_1_name}}
       AZ_1_CUSTER_NAME: {{az_1_cluster_name}}
       AZ_1_RP_NAME: {{az_1_rp_name}}

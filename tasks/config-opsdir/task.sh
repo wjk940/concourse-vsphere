@@ -132,6 +132,22 @@ NETWORK_CONFIGURATION=$(cat <<-EOF
           ]
         }
       ]
+    },
+    {
+      "name": "$ISOLATION_SEGMENT_NETWORK_NAME",
+      "service_network": $ISOLATION_SEGMENT_SRVC_NW,
+      "subnets": [
+        {
+          "iaas_identifier": "$ISOLATION_SEGMENT_VCENTER_NETWORK",
+          "cidr": "$ISOLATION_SEGMENT_NW_CIDR",
+          "reserved_ip_ranges": "$ISOLATION_SEGMENT_EXCLUDED_RANGE",
+          "dns": "$ISOLATION_SEGMENT_NW_DNS",
+          "gateway": "$ISOLATION_SEGMENT_NW_GATEWAY",
+          "availability_zone_names": [
+            $ISOLATION_SEGMENT_AZS
+          ]
+        }
+      ]
     }
   ]
 }
