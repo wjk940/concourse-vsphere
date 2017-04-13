@@ -49,6 +49,11 @@ AZ_CONFIGURATION=$(cat <<-EOF
       "name": "$AZ_4",
       "cluster": "$AZ_4_CUSTER_NAME",
       "resource_pool": "$AZ_4_RP_NAME"
+    },
+    {
+      "name": "$AZ_5",
+      "cluster": "$AZ_5_CUSTER_NAME",
+      "resource_pool": "$AZ_5_RP_NAME"
     }
   ]
 }
