@@ -169,7 +169,7 @@ jobs:
       DYNAMIC_SERVICES_NW_AZS: {{dynamic_services_nw_azs}}
       ISOLATION_SEGMENT_NETWORK_NAME: {{isolation_segment_network_name}}
       ISOLATION_SEGMENT_SRVC_NW: {{isolation_segment_srvc_nw}}
-      ISOLATION_SEGMENT_VSPHERE_NETWORK: {{isolation_segment_vsphere_network}}
+      ISOLATION_SEGMENT_VCENTER_NETWORK: {{isolation_segment_vsphere_network}}
       ISOLATION_SEGMENT_NW_CIDR: {{isolation_segment_nw_cidr}}
       ISOLATION_SEGMENT_EXCLUDED_RANGE: {{isolation_segment_excluded_range}}
       ISOLATION_SEGMENT_NW_DNS: {{isolation_segment_nw_dns}}
