@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x
+
 chmod +x om-cli/om-linux
 
 # source concourse-vsphere/tasks/config-opsdir/taskenv
